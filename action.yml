@@ -1,0 +1,17 @@
+# =================================================== #
+# Project: hurlaz
+# =================================================== #
+name: "Hurlaz"
+description: "Integrate Hurl Scripts test in CI"
+author: "gamalmo1917@gamil.com"
+inputs:
+  hurl-version:
+    description: "The Version of Hurl to use"
+    required: false
+    default: "latest"
+outputs: 
+  hurl-version: 
+    description: "The Version of Hurl that was processed"
+runs:
+  using: node24
+  main: dist/index.js

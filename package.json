@@ -1,0 +1,31 @@
+{
+  "name": "hurlaz",
+  "version": "1.0.0",
+  "description": "github actions for integrate hurl scripts test in CI ",
+  "license": "MIT",
+  "author": "gamalmo1917@gmail.com",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "npx jest",
+    "clean": "rm -rf lib dist",
+    "build:lib": "tsc",
+    "build:dist": "ncc build src/index.ts -o dist --source-map",
+    "build": "npm run clean && npm run build:lib && npm run build:dist",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.6.0",
+    "@vercel/ncc": "^0.38.4",
+    "jest": "^30.3.0",
+    "prettier": "3.8.3",
+    "ts-jest": "^29.4.9",
+    "typescript": "^6.0.3"
+  }
+}
