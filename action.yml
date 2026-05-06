@@ -9,8 +9,8 @@ inputs:
     description: "The Version of Hurl to use"
     required: false
     default: "latest"
-outputs: 
-  hurl-version: 
+outputs:
+  hurl-version:
     description: "The Version of Hurl that was processed"
 runs:
   using: node24

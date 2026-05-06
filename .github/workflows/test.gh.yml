@@ -1,0 +1,27 @@
+# =================================================== #
+# Project: hurlaz
+# =================================================== #
+name: Test Hurlaz Action
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. checkout the codebase
+      - name: checkout codebase
+        uses: actions/checkout@v4
+
+      # 2. Run the action locally
+      - name: test hurlaz action
+        id: hurlaz_test
+        uses: ./
+        with:
+          hurl-version: "8.0.0"
+
+      # 3. Verify results
+      - name: check output
+        run: |
+          echo "Action finished with version ${{ steps.hurlaz_test.outputs.hurl-version }}"
