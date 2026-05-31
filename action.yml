@@ -9,7 +9,7 @@ inputs:
     description: The Version of Hurl to use
     required: true
     default: 7.0.0
-  docker-compose:
+  compose-path:
     description: Docker Compose File Use To Up Project
     required: true
     default: ./docker-compose.dev.yml
