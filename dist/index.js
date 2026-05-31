@@ -30926,23 +30926,57 @@ function getIDToken(aud) {
 // Project: Hurlaz
 // ===================================================
 
-// INFO: Hurl Types
-// INFO: Hurl Downloader
-// INFO: Hurl Finder
-// INFO: Hurl Runner
-// INFO: Hurl reporter
-// INFO: Entrypoint Function
+class HurlManager {
+    version;
+    compose;
+    pattern;
+    threshold;
+    constructor() {
+        this.version = getInput("hurl-version");
+        this.compose = getInput("compose-path");
+        this.pattern = getInput("hurl-pattern");
+        this.threshold = Number(getInput("threshold"));
+    }
+    // INFO: Hurl Package Downloader
+    async download() {
+        info(`Downloading Hurl ${this.version}...`);
+    }
+    // INFO: Hurl Script Finder
+    async find() {
+        info(`Finding Hurl files matching "${this.pattern}"...`);
+    }
+    // INFO: Hurl Script Runner
+    async execute() {
+        info("Running Hurl tests...");
+    }
+    // INFO: Hurl Final Reporter
+    async report() {
+        info("Generating report...");
+    }
+    // INFO: Main workflow
+    async start() {
+        await this.download();
+        await this.find();
+        await this.execute();
+        await this.report();
+        setOutput("hurl-version", this.version);
+    }
+}
+// ===================================================
+// Entrypoint
+// ===================================================
 async function run() {
     try {
-        // 1. Get the input
-        const version = getInput("hurl-version");
-        info(`Peraring to use Hurl version ${version}`);
-        // 2. Set the output
-        setOutput("hurl-version", version);
+        const hurl = new HurlManager();
+        await hurl.start();
     }
     catch (error) {
-        if (error instanceof Error)
+        if (error instanceof Error) {
             setFailed(error.message);
+        }
+        else {
+            setFailed(String(error));
+        }
     }
 }
 run();

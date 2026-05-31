@@ -17,6 +17,10 @@ inputs:
     description: Glob Pattern used to locate Hurl test file
     required: true
     default: test/**/*
+  hurl-vars:
+    description: Global Variable For Scripting
+    required: true
+    default: vars.env
   threshold:
     description: Maximum accepted number of failed test
     required: false

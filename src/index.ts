@@ -7,12 +7,14 @@ class HurlManager {
   public version: string;
   public compose: string;
   public pattern: string;
+  public vars: string;
   public threshold: number;
 
   constructor() {
     this.version = core.getInput("hurl-version");
     this.compose = core.getInput("compose-path");
     this.pattern = core.getInput("hurl-pattern");
+    this.vars = core.getInput("hurl-vars");
     this.threshold = Number(core.getInput("threshold"));
   }
 
@@ -29,6 +31,7 @@ class HurlManager {
   // INFO: Hurl Script Runner
   async execute(): Promise<void> {
     core.info("Running Hurl tests...");
+    // hurl --variables-file vars.env --test *.hurl -v
   }
 
   // INFO: Hurl Final Reporter
