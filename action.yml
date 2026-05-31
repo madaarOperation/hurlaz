@@ -1,17 +1,29 @@
-# =================================================== #
+# ===================================================  #
 # Project: hurlaz
-# =================================================== #
-name: "Hurlaz"
-description: "Integrate Hurl Scripts test in CI"
-author: "gamalmo1917@gamil.com"
+# ===================================================  #
+name: Hurlaz
+description: Integrate Hurl Scripts test in CI
+author: gamalmo1917@gamil.com
 inputs:
   hurl-version:
-    description: "The Version of Hurl to use"
+    description: The Version of Hurl to use
+    required: true
+    default: 7.0.0
+  docker-compose:
+    description: Docker Compose File Use To Up Project
+    required: true
+    default: ./docker-compose.dev.yml
+  hurl-pattern:
+    description: Glob Pattern used to locate Hurl test file
+    required: true
+    default: test/**/*
+  threshold:
+    description: Maximum accepted number of failed test
     required: false
-    default: "latest"
+    default: "1"
 outputs:
   hurl-version:
-    description: "The Version of Hurl that was processed"
+    description: The Version of Hurl that was processed
 runs:
   using: node24
   main: dist/index.js
