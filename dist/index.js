@@ -30844,13 +30844,13 @@ function info(message) {
  * @param name The name of the output group
  */
 function startGroup(name) {
-    issue('group', name);
+    command_issue('group', name);
 }
 /**
  * End an output group.
  */
 function endGroup() {
-    issue('endgroup');
+    command_issue('endgroup');
 }
 /**
  * Wrap an asynchronous function call in a group.
@@ -30930,28 +30930,39 @@ class HurlManager {
     version;
     compose;
     pattern;
+    vars;
     threshold;
     constructor() {
         this.version = getInput("hurl-version");
         this.compose = getInput("compose-path");
         this.pattern = getInput("hurl-pattern");
+        this.vars = getInput("hurl-vars");
         this.threshold = Number(getInput("threshold"));
     }
     // INFO: Hurl Package Downloader
     async download() {
+        startGroup("Download Hurl Binary");
         info(`Downloading Hurl ${this.version}...`);
+        endGroup();
     }
     // INFO: Hurl Script Finder
     async find() {
+        startGroup("Find Hurl Scripts");
         info(`Finding Hurl files matching "${this.pattern}"...`);
+        endGroup();
     }
     // INFO: Hurl Script Runner
     async execute() {
+        startGroup("Execute Hurl Scripts");
         info("Running Hurl tests...");
+        // hurl --variables-file vars.env --test *.hurl -v
+        endGroup();
     }
     // INFO: Hurl Final Reporter
     async report() {
+        startGroup("Generate Test Report");
         info("Generating report...");
+        endGroup();
     }
     // INFO: Main workflow
     async start() {
