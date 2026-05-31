@@ -19,7 +19,6 @@ Hurlaz is a custom GitHub Action for running `hurl` scripts inside CI/CD workflo
 ```text id="v7n2x1"
 Hurlaz
 ├── action.yml           # GitHub Action entrypoint
-├── demo                 # Demo application
 ├── jest.config.js       # Jest configuration
 ├── lib                  # Compiled JavaScript output
 ├── license.txt          # License file
