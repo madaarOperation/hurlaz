@@ -3,52 +3,65 @@
 // ===================================================
 import * as core from "@actions/core";
 
-// INFO: Hurl Types
-interface HurlManager {
-  version: string;
-  compose: string;
-  pattern: string;
-  threshold: number;
-  myHurlDownloader: (hurlManager: HurlManager) => Promise<void>;
-  myHurlFinder: (HurlManager: HurlManager) => Promise<void>;
-  myHurlRunner: (HurlManager: HurlManager) => Promise<void>;
-  myHurlReporter: (HurlManager: HurlManager) => Promise<void>;
-}
+class HurlManager {
+  public version: string;
+  public compose: string;
+  public pattern: string;
+  public threshold: number;
 
-// INFO: Hurl Package Downloader
-async function hurlDownloader(hurlManager: HurlManager): Promise<void> { }
+  constructor() {
+    this.version = core.getInput("hurl-version");
+    this.compose = core.getInput("compose-path");
+    this.pattern = core.getInput("hurl-pattern");
+    this.threshold = Number(core.getInput("threshold"));
+  }
 
-// INFO: Hurl Script Finder
-async function hurlFinder(hurlManager: HurlManager): Promise<void> { }
+  // INFO: Hurl Package Downloader
+  async download(): Promise<void> {
+    core.info(`Downloading Hurl ${this.version}...`);
+  }
 
-// INFO: Hurl Script Runner
-async function hurlRunner(hurlManager: HurlManager): Promise<void> { }
+  // INFO: Hurl Script Finder
+  async find(): Promise<void> {
+    core.info(`Finding Hurl files matching "${this.pattern}"...`);
+  }
 
-// INFO: Hurl Final Reporter
-async function hurlReporter(hurlManager: HurlManager): Promise<void> { }
+  // INFO: Hurl Script Runner
+  async execute(): Promise<void> {
+    core.info("Running Hurl tests...");
+  }
 
-// INFO: Entrypoint Function
-async function run() {
-  try {
-    // 1. Create My Hurl Manager
-    const myHurlManger: HurlManager = {
-      version: core.getInput("hurl-version"),
-      compose: core.getInput("compose-path"),
-      pattern: core.getInput("hurl-pattern"),
-      threshold: parseInt(core.getInput("threshold"), 100),
-      myHurlDownloader: hurlDownloader,
-      myHurlFinder: hurlFinder,
-      myHurlRunner: hurlRunner,
-      myHurlReporter: hurlReporter,
-    };
-    // 2. Download Hurl Package
-    // 3. Check Hurl Script Location
-    // 4. Run Hurl Script
-    // 5. Extract Data Build Report
-    // 2. Set the output
-    core.setOutput("hurl-version", myHurlManger.version);
-  } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message);
+  // INFO: Hurl Final Reporter
+  async report(): Promise<void> {
+    core.info("Generating report...");
+  }
+
+  // INFO: Main workflow
+  async start(): Promise<void> {
+    await this.download();
+    await this.find();
+    await this.execute();
+    await this.report();
+
+    core.setOutput("hurl-version", this.version);
   }
 }
+
+// ===================================================
+// Entrypoint
+// ===================================================
+
+async function run(): Promise<void> {
+  try {
+    const hurl = new HurlManager();
+    await hurl.start();
+  } catch (error) {
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    } else {
+      core.setFailed(String(error));
+    }
+  }
+}
+
 run();
